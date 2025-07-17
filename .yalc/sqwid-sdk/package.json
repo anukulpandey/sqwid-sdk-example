@@ -1,0 +1,39 @@
+{
+  "name": "sqwid-sdk",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest --environment jsdom",
+    "publish:local": "yarn build && yalc publish"
+  },
+  "keywords": [
+    "sqwid-backend",
+    "sqwid-client",
+    "sqwid-app",
+    "external-app",
+    "api"
+  ],
+  "author": "@anukulpandey",
+  "license": "ISC",
+  "description": "Sqwid SDK for integrating sqwid.app with external applications.",
+  "dependencies": {
+    "@reef-chain/evm-provider": "^4.0.5",
+    "@reef-chain/util-lib": "^3.0.2",
+    "axios": "^1.10.0"
+  },
+  "yalcSig": "4126b75c2cd832cef5ab3ce65f61d1c8"
+}
