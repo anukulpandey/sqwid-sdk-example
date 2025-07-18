@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { connectToReef, connectToSqwid } from 'sqwid-sdk';
-import { createCollectible } from './utils/mint';
-import {
-  fetchCollectionInfo,
-  fetchCollectionsByStats,
-  fetchOwnerCollections,
-  STATS_ORDER
-} from './utils/fetchCollections';
+import { connectToReef, connectToSqwid,sqwidWrite,sqwidRead } from 'sqwid-sdk';
 
 function App() {
   const [isWalletConnected, setWalletConnected] = useState(false);
@@ -45,7 +38,7 @@ function App() {
     }
 
     try {
-      const positionId = await createCollectible(
+      const positionId = await sqwidWrite.createCollectible(
         formData,
         reefExtensionConnectResponse.provider,
         reefExtensionConnectResponse.selectedReefSigner.signer
@@ -109,12 +102,12 @@ function App() {
           </button>
 
           <br />
-          <button onClick={async () => console.log(await fetchCollectionsByStats(STATS_ORDER.ITEMS))}>
+          <button onClick={async () => console.log(await sqwidRead.fetchCollectionsByStats(sqwidRead.STATS_ORDER.ITEMS))}>
             Fetch Collections
           </button>
 
           <br />
-          <button onClick={async () => console.log(await fetchCollectionInfo("aLbM95hd62nkFe7Du07k"))}>
+          <button onClick={async () => console.log(await sqwidRead.fetchCollectionInfo("aLbM95hd62nkFe7Du07k"))}>
             Fetch ID: aLbM95hd62nkFe7Du07k
           </button>
 
@@ -122,7 +115,7 @@ function App() {
           <button
             onClick={async () => {
               if (!selectedAddress) return alert("Please select an address first.");
-              const collections = await fetchOwnerCollections(selectedAddress);
+              const collections = await sqwidRead.fetchOwnerCollections(selectedAddress);
               console.log("Owner collections:", collections);
               setOwnerCollections(collections);
             }}
