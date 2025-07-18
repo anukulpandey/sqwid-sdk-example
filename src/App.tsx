@@ -1,12 +1,21 @@
 import { useState } from 'react';
 import './App.css';
 import { connectToReef, connectToSqwid } from 'sqwid-sdk';
-import {createCollectible} from './utils/mint';
+import { createCollectible } from './utils/mint';
+import {
+  fetchCollectionInfo,
+  fetchCollectionsByStats,
+  fetchOwnerCollections,
+  STATS_ORDER
+} from './utils/fetchCollections';
 
 function App() {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const [reefExtensionConnectResponse, setReefExtensionConnectResponse] = useState<any>({});
   const [selectedAddress, setSelectedAddress] = useState<string | undefined>();
+  const [ownerCollections, setOwnerCollections] = useState<any[]>([]);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<string>('');
+
   const [formData, setFormData] = useState<any>({
     name: '',
     description: '',
@@ -100,6 +109,28 @@ function App() {
           </button>
 
           <br />
+          <button onClick={async () => console.log(await fetchCollectionsByStats(STATS_ORDER.ITEMS))}>
+            Fetch Collections
+          </button>
+
+          <br />
+          <button onClick={async () => console.log(await fetchCollectionInfo("aLbM95hd62nkFe7Du07k"))}>
+            Fetch ID: aLbM95hd62nkFe7Du07k
+          </button>
+
+          <br />
+          <button
+            onClick={async () => {
+              if (!selectedAddress) return alert("Please select an address first.");
+              const collections = await fetchOwnerCollections(selectedAddress);
+              console.log("Owner collections:", collections);
+              setOwnerCollections(collections);
+            }}
+          >
+            Fetch Owner Collections
+          </button>
+
+          <br />
           <button
             onClick={async () => {
               await connectToSqwid(reefExtensionConnectResponse.selectedReefSigner);
@@ -109,6 +140,35 @@ function App() {
           </button>
 
           <hr />
+
+          {/* Dropdown for owner collections */}
+          {ownerCollections.length > 0 && (
+            <div>
+              <select
+                value={selectedCollectionId}
+                onChange={(e) => setSelectedCollectionId(e.target.value)}
+              >
+                <option value="">-- Select a collection --</option>
+                {ownerCollections.map((col: any, index: number) => (
+                  <option key={col.id || `${col.name}-${index}`} value={col.id}>
+                    {col.id}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={() => {
+                  const selectedCol = ownerCollections.find(col => col._id === selectedCollectionId);
+                  if (selectedCol) {
+                    setFormData((prev: any) => ({ ...prev, collection: selectedCol.name }));
+                  }
+                }}
+                disabled={!selectedCollectionId}
+                style={{ marginLeft: '10px' }}
+              >
+                Select Collection
+              </button>
+            </div>
+          )}
 
           <h2>Mint Collectible</h2>
           <form
@@ -201,16 +261,14 @@ function App() {
               if (state.loading) return;
 
               if (state.error) {
-                // @ts-ignore
-                console.error('REEF ERROR:', state.error.message);
+                console.error('REEF ERROR:', (state.error as any).message);
               } else {
-                console.log('Accounts:', state);
+                console.log('Reef State:', state);
               }
 
               setWalletConnected(true);
               setReefExtensionConnectResponse(state);
-              // @ts-ignore
-              setSelectedAddress(state.selectedReefSigner?.address);
+              setSelectedAddress((state.selectedReefSigner as any).address);
             });
           }}
         >

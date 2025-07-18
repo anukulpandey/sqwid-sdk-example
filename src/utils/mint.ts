@@ -3,6 +3,7 @@ import { SQWID_BACKEND_URL, SQWID_ERC1155_ADDRESS, SQWID_MARKETPLACE_ADDRESS } f
 import { ethers } from "ethers";
 import axios from "axios";
 import contractABI from "./SqwidERC1155";
+import marketplaceContractABI from "./SqwidMarketplace";
 
 const getEVMAddress = async (address:any,provider:Provider) => {
 	address = await provider.api.query.evmAccounts.evmAddresses(address);
@@ -119,12 +120,13 @@ export const createCollectible = async (files:any,provider:Provider,signer:Signe
 				files.royaltyRecipient && files.royaltyRecipient !== ""
 					? files.royaltyRecipient
 					: await signer.getAddress();
+
 					
 			if (to.startsWith ('5')) to = await getEVMAddress (to,provider);
 					
 			let contract = new ethers.Contract(
 				SQWID_MARKETPLACE_ADDRESS,
-				contractABI,
+				marketplaceContractABI,
 				signer
 			);
 			try {
@@ -133,8 +135,9 @@ export const createCollectible = async (files:any,provider:Provider,signer:Signe
 					meta,
 					file.type.split("/")[0],
 					to,
-					royalty
+					royalty,
 				);
+
 				// eslint-disable-next-line
 				const receipt = await nft.wait();
 				// eslint-disable-next-line
