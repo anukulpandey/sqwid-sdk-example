@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { connectToReef, connectToSqwid,sqwidWrite,sqwidRead } from 'sqwid-sdk';
+import { fetchUserItems, getUserCollections } from './utils/getUserCollections';
 
 function App() {
   const [isWalletConnected, setWalletConnected] = useState(false);
@@ -115,7 +116,7 @@ function App() {
           <button
             onClick={async () => {
               if (!selectedAddress) return alert("Please select an address first.");
-              const collections = await sqwidRead.fetchOwnerCollections(selectedAddress);
+              const collections = await sqwidRead.getUserCollections(selectedAddress);
               console.log("Owner collections:", collections);
               setOwnerCollections(collections);
             }}
@@ -130,6 +131,24 @@ function App() {
             }}
           >
             Connect to Sqwid
+          </button>
+          <hr/>
+          <button
+            onClick={async () => {
+              const response = await getUserCollections(reefExtensionConnectResponse.selectedReefSigner.evmAddress);
+              console.log("Fetch User Collections Response:",response)
+            }}
+          >
+            Fetch User Collections
+          </button>
+          <br/>
+          <button
+            onClick={async () => {
+              const response = await fetchUserItems("0x145f71b75c154f1bc7df53d2958324305c64f031",1);
+              console.log("Fetch User Items Response:",response)
+            }}
+          >
+            Fetch User Collections
           </button>
 
           <hr />

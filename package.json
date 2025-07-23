@@ -14,6 +14,7 @@
     "@reef-chain/util-lib": "^3.0.2",
     "add": "^2.0.6",
     "axios": "^1.10.0",
+    "multiformats": "^13.3.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "sqwid-sdk": "file:.yalc/sqwid-sdk",
