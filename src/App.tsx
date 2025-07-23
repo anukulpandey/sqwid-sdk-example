@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { connectToReef, connectToSqwid,sqwidWrite,sqwidRead } from 'sqwid-sdk';
+import { connectToReef, connectToSqwid,sqwidWrite,sqwidRead } from '@reef-chain/sqwid-sdk';
 import { fetchUserItems, getUserCollections } from './utils/getUserCollections';
 
 function App() {

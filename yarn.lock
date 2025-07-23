@@ -2974,6 +2974,15 @@
     blakejs "~1.2.1"
     ethers "~5.5.0"
 
+"@reef-chain/sqwid-sdk@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@reef-chain/sqwid-sdk/-/sqwid-sdk-1.0.1.tgz#b8114ae70ca822bd8f700990f20f533e60cd049d"
+  integrity sha512-tAGmV8yjxoFxBNPadBsoc35Y9j033PxZWazPp1QKtx1/hdiYpCPSwJ/xUhBpugHEvp9ECJbfGaxbnyuK7efp7w==
+  dependencies:
+    "@reef-chain/evm-provider" "^4.0.5"
+    "@reef-chain/util-lib" "^3.0.2"
+    axios "^1.10.0"
+
 "@reef-chain/util-lib@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@reef-chain/util-lib/-/util-lib-3.0.2.tgz#c677dfe0c3409b62bfc6401ec8e3787a71a20ef1"
@@ -9830,8 +9839,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-"sqwid-sdk@file:.yalc/sqwid-sdk":
-  version "1.0.0"
+sqwid-sdk@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sqwid-sdk/-/sqwid-sdk-1.0.1.tgz#7eff8eea40505218c0d7f498a38da38c3fc5b4e4"
+  integrity sha512-Jpv3klBU1LlEW4npnR7XC0OctOc0tGOcEYDsTsBwa72UF2a5UJLyGdQiOVTwFbMek6qnwKp3NZlyZ6INMdV5eA==
   dependencies:
     "@reef-chain/evm-provider" "^4.0.5"
     "@reef-chain/util-lib" "^3.0.2"
